@@ -493,11 +493,17 @@ public void resetOdometry(Pose2d pose) {
 }
 
 public void setSwerveModuleStates(SwerveModuleState[] targetState){
-  rotateModuleNonLinear(SwerveModule.FRONT_LEFT, targetState[0].angle.getDegrees(), targetState[0].speedMetersPerSecond);
-  rotateModuleNonLinear(SwerveModule.FRONT_RIGHT, targetState[1].angle.getDegrees(), targetState[1].speedMetersPerSecond);
-  rotateModuleNonLinear(SwerveModule.REAR_LEFT, targetState[2].angle.getDegrees(), targetState[2].speedMetersPerSecond);
-  rotateModuleNonLinear(SwerveModule.REAR_RIGHT, targetState[3].angle.getDegrees(), targetState[3].speedMetersPerSecond);
+  rotateModuleNonLinear(SwerveModule.FRONT_LEFT, targetState[0].angle.getDegrees(), 0.1);
+  rotateModuleNonLinear(SwerveModule.FRONT_RIGHT, targetState[1].angle.getDegrees(), 0.1);
+  rotateModuleNonLinear(SwerveModule.REAR_LEFT, targetState[2].angle.getDegrees(), 0.1);
+  rotateModuleNonLinear(SwerveModule.REAR_RIGHT, targetState[3].angle.getDegrees(), 0.1);
+
+  rotateMotor(Motors.FRONT_LEFT_DRV, targetState[0].speedMetersPerSecond);
+  rotateMotor(Motors.FRONT_RIGHT_DRV, targetState[1].speedMetersPerSecond);
+  rotateMotor(Motors.REAR_LEFT_DRV, targetState[2].speedMetersPerSecond);
+  rotateMotor(Motors.REAR_RIGHT_DRV, targetState[3].speedMetersPerSecond);
 }
+
 
 
 
