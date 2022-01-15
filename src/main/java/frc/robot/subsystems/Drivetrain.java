@@ -10,9 +10,11 @@ import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -59,11 +61,16 @@ public class Drivetrain extends SubsystemBase {
     rearRightDrvMotor = new TalonFX(Constants.rearRightDrvMotorPort);
 
     //This *should* be selecting the inbuilt talon encoder as the output device
-    //Dunno what 1 and 50 are suppposed to be
-    //frontLeftDrvMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 1, 50);
-    //frontRightDrvMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 1, 50);
-    //rearLeftDrvMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 1, 50);
-    //rearRightDrvMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 1, 50);
+    //Mag encoder 4096 units per rotation
+    frontLeftDrvMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    frontRightDrvMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    rearLeftDrvMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    rearRightDrvMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+
+    frontLeftDrvMotor.setSelectedSensorPosition(0);
+    frontRightDrvMotor.setSelectedSensorPosition(0);
+    rearLeftDrvMotor.setSelectedSensorPosition(0);
+    rearRightDrvMotor.setSelectedSensorPosition(0);
 
     frontLeftRotMotor = new TalonFX(Constants.frontLeftRotMotorPort);
     frontRightRotMotor = new TalonFX(Constants.frontRightRotMotorPort);
@@ -144,7 +151,9 @@ public class Drivetrain extends SubsystemBase {
 
     drivetrainDashboard = drivetrainDashboard + "odometry X/" + odometry.getPoseMeters().getX() + ";";
     drivetrainDashboard = drivetrainDashboard + "odometry Y/" + odometry.getPoseMeters().getY() + ";";
-    drivetrainDashboard = drivetrainDashboard + "odometry Z/" + odometry.getPoseMeters().getRotation().getDegrees();
+    drivetrainDashboard = drivetrainDashboard + "odometry Z/" + odometry.getPoseMeters().getRotation().getDegrees() + ";";
+
+    drivetrainDashboard = drivetrainDashboard + "FL Talon Encoder/" + frontLeftDrvMotor.getSelectedSensorPosition();
 
   }
 
@@ -264,6 +273,10 @@ public class Drivetrain extends SubsystemBase {
     frontRightDrvMotor.set(TalonFXControlMode.PercentOutput, speed);
     rearLeftDrvMotor.set(TalonFXControlMode.PercentOutput, speed);
     rearRightDrvMotor.set(TalonFXControlMode.PercentOutput, speed);
+
+    if(speed == 0){
+      SmartDashboard.putString("Auto Stopped", "Yes");
+    }
   
   }
 
@@ -292,6 +305,34 @@ public class Drivetrain extends SubsystemBase {
     }
     else if(motor == Motors.REAR_RIGHT_DRV){
       rearRightDrvMotor.set(TalonFXControlMode.PercentOutput, speed);
+    }
+  }
+
+  //MAKE SURE TO ENTER IN POSITION CHANGE/100ms ?????????
+  public void rotateMotorVelocity(Motors motor, double velocity){
+    if(motor == Motors.FRONT_LEFT_ROT){
+      frontLeftRotMotor.set(TalonFXControlMode.Velocity, velocity);
+    }
+    else if(motor == Motors.FRONT_RIGHT_ROT){
+      frontRightRotMotor.set(TalonFXControlMode.Velocity, velocity);
+    }
+    else if(motor == Motors.REAR_LEFT_ROT){
+      rearLeftRotMotor.set(TalonFXControlMode.Velocity, velocity);
+    }
+    else if(motor == Motors.REAR_RIGHT_ROT){
+      rearRightRotMotor.set(TalonFXControlMode.Velocity, velocity);
+    }
+    else if(motor == Motors.FRONT_LEFT_DRV){
+      frontLeftDrvMotor.set(TalonFXControlMode.Velocity, velocity);
+    }
+    else if(motor == Motors.FRONT_RIGHT_DRV){
+      frontRightDrvMotor.set(TalonFXControlMode.Velocity, velocity);
+    }
+    else if(motor == Motors.REAR_LEFT_DRV){
+      rearLeftDrvMotor.set(TalonFXControlMode.Velocity, velocity);
+    }
+    else if(motor == Motors.REAR_RIGHT_DRV){
+      rearRightDrvMotor.set(TalonFXControlMode.Velocity, velocity);
     }
   }
 
@@ -457,25 +498,6 @@ public double customPID(double target){
 }
 
 
-  public String sendDashboard(){
-    
-    String drivetrainDashboard;
-
-    drivetrainDashboard = "frontLeft rot encoder/" + getRotEncoderValue(SwerveModule.FRONT_LEFT) + ";";
-    drivetrainDashboard = drivetrainDashboard + "frontLeft PID/" + getRotPIDOutput(SwerveModule.FRONT_LEFT) + ";";
-
-    drivetrainDashboard = drivetrainDashboard + "frontRight rot encoder/" + getRotEncoderValue(SwerveModule.FRONT_RIGHT) + ";";
-    drivetrainDashboard = drivetrainDashboard + "frontRight PID/" + getRotPIDOutput(SwerveModule.FRONT_RIGHT) + ";";
-
-    drivetrainDashboard = drivetrainDashboard + "rearLeft rot encoder/" + getRotEncoderValue(SwerveModule.REAR_LEFT) + ";";
-    drivetrainDashboard = drivetrainDashboard + "rearLeft PID/" + getRotPIDOutput(SwerveModule.REAR_LEFT) + ";";
-
-    drivetrainDashboard = drivetrainDashboard + "rearRight rot encoder/" + getRotEncoderValue(SwerveModule.REAR_RIGHT) + ";";
-    drivetrainDashboard = drivetrainDashboard + "rearRight PID/" + getRotPIDOutput(SwerveModule.REAR_RIGHT);
-
-    return drivetrainDashboard;
-  }
-
 
 
 
@@ -492,16 +514,22 @@ public void resetOdometry(Pose2d pose) {
   odometry.resetPosition(pose, navx.getRotation2d());
 }
 
-public void setSwerveModuleStates(SwerveModuleState[] targetState){
+public void setSwerveModuleStates(SwerveModuleState[] targetState)  {
+
+  SwerveDriveKinematics.desaturateWheelSpeeds(targetState, 4);
+
   rotateModuleNonLinear(SwerveModule.FRONT_LEFT, targetState[0].angle.getDegrees(), 0.1);
   rotateModuleNonLinear(SwerveModule.FRONT_RIGHT, targetState[1].angle.getDegrees(), 0.1);
   rotateModuleNonLinear(SwerveModule.REAR_LEFT, targetState[2].angle.getDegrees(), 0.1);
   rotateModuleNonLinear(SwerveModule.REAR_RIGHT, targetState[3].angle.getDegrees(), 0.1);
 
-  rotateMotor(Motors.FRONT_LEFT_DRV, targetState[0].speedMetersPerSecond);
-  rotateMotor(Motors.FRONT_RIGHT_DRV, targetState[1].speedMetersPerSecond);
-  rotateMotor(Motors.REAR_LEFT_DRV, targetState[2].speedMetersPerSecond);
-  rotateMotor(Motors.REAR_RIGHT_DRV, targetState[3].speedMetersPerSecond);
+  rotateMotor(Motors.FRONT_LEFT_DRV, targetState[0].speedMetersPerSecond/16);
+  rotateMotor(Motors.FRONT_RIGHT_DRV, targetState[1].speedMetersPerSecond/16);
+  rotateMotor(Motors.REAR_LEFT_DRV, targetState[2].speedMetersPerSecond/16);
+  rotateMotor(Motors.REAR_RIGHT_DRV, targetState[3].speedMetersPerSecond/16);
+
+  SmartDashboard.putNumber("FL targetState[0]", targetState[0].speedMetersPerSecond);
+  SmartDashboard.putNumber("FL targetState[0] angle", targetState[0].angle.getDegrees());
 }
 
 

@@ -20,6 +20,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
  */
 public final class Constants {
 
+    public static final int testMotor = 6;
+
     public static final int frontLeftDrvMotorPort = 4;
     public static final int frontRightDrvMotorPort = 2;
     public static final int rearLeftDrvMotorPort = 6;

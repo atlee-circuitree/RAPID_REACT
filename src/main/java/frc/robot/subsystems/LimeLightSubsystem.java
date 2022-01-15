@@ -14,8 +14,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Limelight Values
 
+
  
 public class LimeLightSubsystem extends SubsystemBase {
+
+
+  public static String limelightDashboard;
 
   // private static drivetrainSubsystem m_drivetrainSubsystem = new
   // drivetrainSubsystem();
@@ -173,8 +177,10 @@ public class LimeLightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     ReadNetworkTables();
-    SmartDashboard.putNumber("Limelight Horizontal", dbl_thor);
-    SmartDashboard.putNumber("Limelight Vertical", dbl_tvert);
+    //SmartDashboard.putNumber("Limelight Horizontal", dbl_thor);
+    //SmartDashboard.putNumber("Limelight Vertical", dbl_tvert);
+    limelightDashboard = "Limelight Horizontal/" + dbl_thor + ";";
+    limelightDashboard = limelightDashboard + "Limelight Vertical/" + dbl_tvert + ";";
   }
  
 }

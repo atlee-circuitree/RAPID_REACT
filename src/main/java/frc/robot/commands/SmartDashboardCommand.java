@@ -30,15 +30,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.LimeLightSubsystem;
 
 
 public class SmartDashboardCommand extends CommandBase {
 
-  
-  public SmartDashboardCommand() {}
+  private final LimeLightSubsystem limelight;
+ 
+  public SmartDashboardCommand(LimeLightSubsystem ls) {
+
+    limelight = ls;
+
+  }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+
+   limelight.EnableLED();
+
+  }
 
   @Override
   public void execute() {
@@ -47,15 +57,19 @@ public class SmartDashboardCommand extends CommandBase {
 
 
     //DriveWithXbox display local vars  
-    
-    String[] splitStringArrayDWX = DriveWithXbox.driveWithXboxDashboard.split(";");
+    try{
+      String[] splitStringArrayDWX = DriveWithXbox.driveWithXboxDashboard.split(";");
 
-    for(int i = 0; i <= splitStringArrayDWX.length-1; i++){
+      for(int i = 0; i <= splitStringArrayDWX.length-1; i++){
 
-      String[] splitSplitStringArrayDWX = splitStringArrayDWX[i].split("/");
-      SmartDashboard.putString(splitSplitStringArrayDWX[0], splitSplitStringArrayDWX[1]);
+        String[] splitSplitStringArrayDWX = splitStringArrayDWX[i].split("/");
+        SmartDashboard.putString(splitSplitStringArrayDWX[0], splitSplitStringArrayDWX[1]);
 
+      }
     }
+  catch(NullPointerException exception){
+
+  }
 
     //VARS FROM ROBOTCONTAINER AND DRIVETRAIN
 
@@ -71,6 +85,21 @@ public class SmartDashboardCommand extends CommandBase {
 
       String[] splitSplitStringArrayDVT = splitStringArrayDVT[i].split("/");
       SmartDashboard.putString(splitSplitStringArrayDVT[0], splitSplitStringArrayDVT[1]);
+
+    }
+
+    //LIMELIGHT SUBSYSTEM VARS
+
+    SmartDashboard.putNumber("Horizonal Offset", limelight.VerticalOffset());
+ 
+    String[] splitStringArrayLIM = LimeLightSubsystem.limelightDashboard.split(";");
+    SmartDashboard.putNumber("LIM String Length", splitStringArrayLIM.length);
+    SmartDashboard.putString("LIM String", LimeLightSubsystem.limelightDashboard);
+    
+    for(int i = 0; i <= splitStringArrayLIM.length-1; i++){
+
+      String[] splitSplitStringArrayLIM = splitStringArrayLIM[i].split("/");
+      SmartDashboard.putString(splitSplitStringArrayLIM[0], splitSplitStringArrayLIM[1]);
 
     }
 
