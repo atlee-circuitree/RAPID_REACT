@@ -131,11 +131,12 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
 
     //Updates odometry
+    //440440 comes from the encoder counts per meter times 10 (since getSelectedSensorVelocity() returns ticks/100ms and we want meters/second)
     odometry.update(navx.getRotation2d(), 
-    new SwerveModuleState(frontLeftDrvMotor.getSelectedSensorVelocity(), Rotation2d.fromDegrees(getRotEncoderValue(SwerveModule.FRONT_LEFT))),
-    new SwerveModuleState(frontRightDrvMotor.getSelectedSensorVelocity(), Rotation2d.fromDegrees(getRotEncoderValue(SwerveModule.FRONT_RIGHT))),
-    new SwerveModuleState(rearLeftDrvMotor.getSelectedSensorVelocity(), Rotation2d.fromDegrees(getRotEncoderValue(SwerveModule.REAR_LEFT))),
-    new SwerveModuleState(rearRightDrvMotor.getSelectedSensorVelocity(), Rotation2d.fromDegrees(getRotEncoderValue(SwerveModule.REAR_RIGHT))));
+    new SwerveModuleState(frontLeftDrvMotor.getSelectedSensorVelocity()/4404.4, Rotation2d.fromDegrees(getRotEncoderValue(SwerveModule.FRONT_LEFT))),
+    new SwerveModuleState(frontRightDrvMotor.getSelectedSensorVelocity()/4404.4, Rotation2d.fromDegrees(getRotEncoderValue(SwerveModule.FRONT_RIGHT))),
+    new SwerveModuleState(rearLeftDrvMotor.getSelectedSensorVelocity()/4404.4, Rotation2d.fromDegrees(getRotEncoderValue(SwerveModule.REAR_LEFT))),
+    new SwerveModuleState(rearRightDrvMotor.getSelectedSensorVelocity()/4404.4, Rotation2d.fromDegrees(getRotEncoderValue(SwerveModule.REAR_RIGHT))));
 
     drivetrainDashboard = "frontLeft rot encoder/" + getRotEncoderValue(SwerveModule.FRONT_LEFT) + ";";
     drivetrainDashboard = drivetrainDashboard + "frontLeft PID/" + getRotPIDOutput(SwerveModule.FRONT_LEFT) + ";";
@@ -153,7 +154,8 @@ public class Drivetrain extends SubsystemBase {
     drivetrainDashboard = drivetrainDashboard + "odometry Y/" + odometry.getPoseMeters().getY() + ";";
     drivetrainDashboard = drivetrainDashboard + "odometry Z/" + odometry.getPoseMeters().getRotation().getDegrees() + ";";
 
-    drivetrainDashboard = drivetrainDashboard + "FL Talon Encoder/" + frontLeftDrvMotor.getSelectedSensorPosition();
+    drivetrainDashboard = drivetrainDashboard + "FL Talon Encoder Position/" + frontLeftDrvMotor.getSelectedSensorPosition() + ";";
+    drivetrainDashboard = drivetrainDashboard + "FL Talon Encoder Velocity/" + frontLeftDrvMotor.getSelectedSensorVelocity()/4404.4;
 
   }
 
@@ -523,10 +525,10 @@ public void setSwerveModuleStates(SwerveModuleState[] targetState)  {
   rotateModuleNonLinear(SwerveModule.REAR_LEFT, targetState[2].angle.getDegrees(), 0.1);
   rotateModuleNonLinear(SwerveModule.REAR_RIGHT, targetState[3].angle.getDegrees(), 0.1);
 
-  rotateMotor(Motors.FRONT_LEFT_DRV, targetState[0].speedMetersPerSecond/16);
-  rotateMotor(Motors.FRONT_RIGHT_DRV, targetState[1].speedMetersPerSecond/16);
-  rotateMotor(Motors.REAR_LEFT_DRV, targetState[2].speedMetersPerSecond/16);
-  rotateMotor(Motors.REAR_RIGHT_DRV, targetState[3].speedMetersPerSecond/16);
+  rotateMotor(Motors.FRONT_LEFT_DRV, targetState[0].speedMetersPerSecond/4.8768);
+  rotateMotor(Motors.FRONT_RIGHT_DRV, targetState[1].speedMetersPerSecond/4.8768);
+  rotateMotor(Motors.REAR_LEFT_DRV, targetState[2].speedMetersPerSecond/4.8768);
+  rotateMotor(Motors.REAR_RIGHT_DRV, targetState[3].speedMetersPerSecond/4.8768);
 
   SmartDashboard.putNumber("FL targetState[0]", targetState[0].speedMetersPerSecond);
   SmartDashboard.putNumber("FL targetState[0] angle", targetState[0].angle.getDegrees());
