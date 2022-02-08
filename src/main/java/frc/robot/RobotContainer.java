@@ -7,6 +7,7 @@ package frc.robot;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -17,19 +18,20 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import frc.robot.commands.DriveWithXbox;
+import frc.robot.commands.MoveClimbPistonCommand;
+import frc.robot.commands.MoveHookCommand;
 import frc.robot.commands.RecalibrateModules;
 import frc.robot.commands.SmartDashboardCommand;
 import frc.robot.commands.TestDriveCommand;
 import frc.robot.commands.TestRotateModules;
-import frc.robot.commands.runTestMotor;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.LimeLightSubsystem;
-import frc.robot.subsystems.TestSubsystem;
-
+ 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -39,13 +41,15 @@ import frc.robot.subsystems.TestSubsystem;
 public class RobotContainer {
   
   //Controllers
-  public static XboxController xbox;
+  public static XboxController Xbox1;
+  public static XboxController Xbox2;
+  public static Joystick Fightstick = new Joystick(2);
   
   //Subsystems
   private final Drivetrain drivetrain;
   private final LimeLightSubsystem limelight;
-  private final TestSubsystem test;
- 
+  private final ClimbSubsystem climb;
+  
   //Commands
   private final DriveWithXbox driveWithXbox;
   private final TestRotateModules testRotateModules;
@@ -53,57 +57,60 @@ public class RobotContainer {
   private final SmartDashboardCommand smartDashboardCommand;
   private final PerpetualCommand DWXwithSDC;
   private final RecalibrateModules recalibrateModules;
-  private final runTestMotor runTestMotor;
+  private final MoveHookCommand MoveHook;
+ 
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
   public RobotContainer() {
-
-    test = new TestSubsystem();
+ 
+    //Subsystems
     drivetrain = new Drivetrain();
     limelight = new LimeLightSubsystem();
+    climb = new ClimbSubsystem();
 
-    
-
+    //Single Commands (One Use)
     driveWithXbox = new DriveWithXbox(drivetrain);
     driveWithXbox.addRequirements(drivetrain);
-
     smartDashboardCommand = new SmartDashboardCommand(limelight);
     DWXwithSDC = new PerpetualCommand(driveWithXbox.alongWith(smartDashboardCommand));
-    runTestMotor = new runTestMotor(.3, test);
-
-    configureButtonBindings();
-
     testDriveCommand = new TestDriveCommand(drivetrain);
+    MoveHook = new MoveHookCommand(Fightstick, climb);
     //testDriveCommand.addRequirements(drivetrain);
     //drivetrain.setDefaultCommand(testDriveCommand);
 
     //Auto Setup
     testRotateModules = new TestRotateModules(drivetrain);
 
-    
-
     //Other Setup
-
-    recalibrateModules = new RecalibrateModules(drivetrain, xbox);
-
+    configureButtonBindings();
+    recalibrateModules = new RecalibrateModules(drivetrain, Xbox1);
     drivetrain.setDefaultCommand(DWXwithSDC);
+
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
+  //Mult Commands (Many Uses)
+  public Command climbCommand(boolean goingUp) {
+    Command m_climbCommand = new MoveClimbPistonCommand(goingUp, climb);
+    return m_climbCommand;
+  }
+
   private void configureButtonBindings() {
 
-    xbox = new XboxController(0);
+    //Controllers
+    Xbox1 = new XboxController(0);
 
-    JoystickButton DriverA = new JoystickButton(xbox, XboxController.Button.kA.value);
+    //Buttons
+    JoystickButton Xbox1_A = new JoystickButton(Xbox1, XboxController.Button.kA.value);
 
-    DriverA.whenHeld(runTestMotor);
+    JoystickButton Xbox2_A = new JoystickButton(Xbox2, XboxController.Button.kA.value);
+
+    JoystickButton Fight_1 = new JoystickButton(Fightstick, 1);
+    JoystickButton Fight_2 = new JoystickButton(Fightstick, 2);
+
+    //Button Assignment
+    Fight_1.whenPressed(climbCommand(true));
+    Fight_2.whenPressed(climbCommand(true));
+
+    //Stick Assignment
 
   }
 

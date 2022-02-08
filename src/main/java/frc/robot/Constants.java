@@ -20,9 +20,7 @@ import edu.wpi.first.wpilibj.I2C;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
-    public static final int testMotor = 6;
-
+ 
     //Drivetrain Motors
 
     public static final int frontLeftDrvMotorPort = 4;
@@ -39,6 +37,25 @@ public final class Constants {
     public static final int frontRightRotEncoderPort = 9;
     public static final int rearLeftRotEncoderPort = 10;
     public static final int rearRightRotEncoderPort = 12;
+
+    public static final int feederMotorPort = 0;
+
+    //Other Motors
+    
+    public static final int hookMotorPort = 0;
+
+    //Solenolds
+
+    public static final int kickoutPnumatic = 0;
+    public static final int climbLeftPnumatic = 0;
+    public static final int climbRightPnumatic = 0;
+
+    public static final int kickoutPnumatic_Deploy = 0;
+    public static final int kickoutPnumatic_Retract = 0;
+    public static final int climbLeftPnumatic_Deploy = 0;
+    public static final int climbLeftPnumatic_Retract = 0;
+    public static final int climbRightPnumatic_Deploy = 0;
+    public static final int climbRightPnumatic_Retract = 0;
 
     //Sensors
 
