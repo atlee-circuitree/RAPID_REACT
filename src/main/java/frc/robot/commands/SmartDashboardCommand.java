@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.SensorSubsystem;
 
 
 public class SmartDashboardCommand extends CommandBase {
@@ -46,7 +47,7 @@ public class SmartDashboardCommand extends CommandBase {
   @Override
   public void initialize() {
 
-   limelight.EnableLED();
+   limelight.DisableLED();
 
   }
 
@@ -102,6 +103,11 @@ public class SmartDashboardCommand extends CommandBase {
       SmartDashboard.putString(splitSplitStringArrayLIM[0], splitSplitStringArrayLIM[1]);
 
     }
+
+    //COLOR SENSOR VALUES
+
+    SmartDashboard.putNumber("Red Seen?", SensorSubsystem.isRed());
+  
 
   }  
 
