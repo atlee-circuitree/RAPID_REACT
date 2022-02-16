@@ -32,6 +32,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.SensorSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 
 
 public class SmartDashboardCommand extends CommandBase {
@@ -107,8 +108,13 @@ public class SmartDashboardCommand extends CommandBase {
     //COLOR SENSOR VALUES
 
     SmartDashboard.putNumber("Red Seen?", SensorSubsystem.isRed());
-  
 
+    //TURRET VALUES
+
+    SmartDashboard.putNumber("Turret Velocity", TurretSubsystem.getVelocity());
+
+    SmartDashboard.putNumber("Turret Position", TurretSubsystem.getTurretPosition());
+  
   }  
 
   @Override

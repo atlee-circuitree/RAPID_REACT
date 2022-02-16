@@ -95,20 +95,35 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
 
-    //Controllers
-    Xbox1 = new XboxController(0);
-
     //Buttons
     JoystickButton Xbox1_A = new JoystickButton(Xbox1, XboxController.Button.kA.value);
+    JoystickButton Xbox1_B = new JoystickButton(Xbox1, XboxController.Button.kB.value);
+    JoystickButton Xbox1_X = new JoystickButton(Xbox1, XboxController.Button.kX.value);
+    JoystickButton Xbox1_Y = new JoystickButton(Xbox1, XboxController.Button.kY.value);
+    JoystickButton Xbox1_LBumper = new JoystickButton(Xbox1, XboxController.Button.kLeftBumper.value);
+    JoystickButton Xbox1_RBumper = new JoystickButton(Xbox1, XboxController.Button.kRightBumper.value);
+    JoystickButton Xbox1_Start = new JoystickButton(Xbox1, XboxController.Button.kStart.value);
+    JoystickButton Xbox1_Back = new JoystickButton(Xbox1, XboxController.Button.kBack.value);
 
     JoystickButton Xbox2_A = new JoystickButton(Xbox2, XboxController.Button.kA.value);
+    JoystickButton Xbox2_B = new JoystickButton(Xbox2, XboxController.Button.kB.value);
+    JoystickButton Xbox2_X = new JoystickButton(Xbox2, XboxController.Button.kX.value);
+    JoystickButton Xbox2_Y = new JoystickButton(Xbox2, XboxController.Button.kY.value);
+    JoystickButton Xbox2_LBumper = new JoystickButton(Xbox2, XboxController.Button.kLeftBumper.value);
+    JoystickButton Xbox2_RBumper = new JoystickButton(Xbox2, XboxController.Button.kRightBumper.value);
+    JoystickButton Xbox2_Start = new JoystickButton(Xbox2, XboxController.Button.kStart.value);
+    JoystickButton Xbox2_Back = new JoystickButton(Xbox2, XboxController.Button.kBack.value);
 
     JoystickButton Fight_1 = new JoystickButton(Fightstick, 1);
     JoystickButton Fight_2 = new JoystickButton(Fightstick, 2);
+    JoystickButton Fight_3 = new JoystickButton(Fightstick, 1);
+    JoystickButton Fight_4 = new JoystickButton(Fightstick, 2);
+    JoystickButton Fight_5 = new JoystickButton(Fightstick, 1);
+    JoystickButton Fight_6 = new JoystickButton(Fightstick, 2);
 
     //Button Assignment
     Fight_1.whenPressed(climbCommand(true));
-    Fight_2.whenPressed(climbCommand(true));
+    Fight_2.whenPressed(climbCommand(false));
 
     //Stick Assignment
 

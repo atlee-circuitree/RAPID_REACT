@@ -42,13 +42,17 @@ public final class Constants {
 
     //Other Motors
     
+    public static final int topShootMotorPort = 0;
+    public static final int bottomShootMotorPort = 0;
     public static final int hookMotorPort = 0;
+    public static final int turretMotorPort = 0;
 
     //Solenolds
 
     public static final int kickoutPnumatic = 0;
     public static final int climbLeftPnumatic = 0;
     public static final int climbRightPnumatic = 0;
+    public static final int shootPnumatic = 0;
 
     public static final int kickoutPnumatic_Deploy = 0;
     public static final int kickoutPnumatic_Retract = 0;
@@ -56,6 +60,8 @@ public final class Constants {
     public static final int climbLeftPnumatic_Retract = 0;
     public static final int climbRightPnumatic_Deploy = 0;
     public static final int climbRightPnumatic_Retract = 0;
+    public static final int shootPnumatic_Deploy = 0;
+    public static final int shootPnumatic_Retract = 0;
 
     //Sensors
 
