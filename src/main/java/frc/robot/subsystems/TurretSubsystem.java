@@ -27,7 +27,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     topShootMotor = new TalonSRX(Constants.topShootMotorPort);
     bottomShootMotor = new TalonSRX(Constants.bottomShootMotorPort);
-    turretMotor = new CANSparkMax(Constants.turretMotorPort, MotorType.kBrushless);
+    turretMotor = new CANSparkMax(Constants.turretMotorPort, MotorType.kBrushed);
     shootPiston = new DoubleSolenoid(null, Constants.shootPnumatic_Deploy, Constants.shootPnumatic_Retract);
     turretEncoder = turretMotor.getEncoder();
     
