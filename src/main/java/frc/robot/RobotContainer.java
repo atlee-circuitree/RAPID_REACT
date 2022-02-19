@@ -118,7 +118,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     
     DriverA.whileHeld(RunFeeder);
-    DriverB.whileHeld(simpleTurretCommand(1200));
+    DriverB.whileHeld(simpleTurretCommand(4800));
     
   }
 

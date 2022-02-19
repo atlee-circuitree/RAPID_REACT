@@ -21,15 +21,13 @@ public class TurretSubsystem extends SubsystemBase {
   static TalonSRX topShootMotor = null;
   static TalonSRX bottomShootMotor = null;
   CANSparkMax turretMotor = null;
-  static RelativeEncoder turretEncoder = null;
-
+  
   public TurretSubsystem() {
 
     topShootMotor = new TalonSRX(Constants.topShootMotorPort);
     bottomShootMotor = new TalonSRX(Constants.bottomShootMotorPort);
     turretMotor = new CANSparkMax(Constants.turretMotorPort, MotorType.kBrushed);
      
-    turretEncoder = turretMotor.getEncoder();
     
   }
 
@@ -46,34 +44,11 @@ public class TurretSubsystem extends SubsystemBase {
 
   }
 
-  public void turnTurretWithLimit(double speed, double limit) {
-
-    if (limit < turretEncoder.getPosition() && speed > 0) {
-
-      turretMotor.set(0);
-
-    } else if (-limit > turretEncoder.getPosition() && speed < 0) {
-
-      turretMotor.set(0);
-
-    } else {
-
-      turretMotor.set(speed);
-
-    }
-
-  }
-
   public static double getVelocity() {
 
     return (topShootMotor.getSelectedSensorVelocity() + bottomShootMotor.getSelectedSensorVelocity()) / 2;
 
   }
 
-  public static double getTurretPosition() {
-
-    return turretEncoder.getPosition();
-
-  }
-
+  
 }
