@@ -7,7 +7,9 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -20,7 +22,7 @@ import edu.wpi.first.wpilibj.I2C;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
- 
+  
     //Drivetrain Motors
 
     public static final int frontLeftDrvMotorPort = 4;
@@ -33,35 +35,35 @@ public final class Constants {
     public static final int rearLeftRotMotorPort = 5;
     public static final int rearRightRotMotorPort = 7;
 
-    public static final int frontLeftRotEncoderPort = 11;
-    public static final int frontRightRotEncoderPort = 9;
-    public static final int rearLeftRotEncoderPort = 10;
-    public static final int rearRightRotEncoderPort = 12;
+    public static final int frontLeftRotEncoderPort = 19;
+    public static final int frontRightRotEncoderPort = 20;
+    public static final int rearLeftRotEncoderPort = 21;
+    public static final int rearRightRotEncoderPort = 22;
 
-    public static final int feederMotorPort = 0;
+    public static final int feederMotorPort = 10;
 
     //Other Motors
     
-    public static final int topShootMotorPort = 0;
-    public static final int bottomShootMotorPort = 0;
-    public static final int hookMotorPort = 0;
-    public static final int turretMotorPort = 0;
+    public static final int topShootMotorPort = 11;
+    public static final int bottomShootMotorPort = 12;
+    public static final int hookMotorPort = 14;
+    public static final int turretMotorPort = 13;
 
     //Solenolds
 
-    public static final int kickoutPnumatic = 0;
+    public static final int kickoutPnumatic = 12;
     public static final int climbLeftPnumatic = 0;
-    public static final int climbRightPnumatic = 0;
-    public static final int shootPnumatic = 0;
+    public static final int climbRightPnumatic = 14;
+    public static final int shootPnumatic = 6;
 
-    public static final int kickoutPnumatic_Deploy = 0;
-    public static final int kickoutPnumatic_Retract = 0;
+    public static final int kickoutPnumatic_Deploy = 12;
+    public static final int kickoutPnumatic_Retract = 13;
     public static final int climbLeftPnumatic_Deploy = 0;
-    public static final int climbLeftPnumatic_Retract = 0;
-    public static final int climbRightPnumatic_Deploy = 0;
-    public static final int climbRightPnumatic_Retract = 0;
-    public static final int shootPnumatic_Deploy = 0;
-    public static final int shootPnumatic_Retract = 0;
+    public static final int climbLeftPnumatic_Retract = 1;
+    public static final int climbRightPnumatic_Deploy = 14;
+    public static final int climbRightPnumatic_Retract = 15;
+    public static final int shootPnumatic_Deploy = 6;
+    public static final int shootPnumatic_Retract = 7;
 
     //Sensors
 

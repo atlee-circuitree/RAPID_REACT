@@ -7,7 +7,9 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,8 +22,8 @@ public class ClimbSubsystem extends SubsystemBase {
   public ClimbSubsystem() {
 
     hookMotor = new CANSparkMax(Constants.hookMotorPort, MotorType.kBrushless);
-    climbLeft = new DoubleSolenoid(null, Constants.climbLeftPnumatic_Deploy, Constants.climbLeftPnumatic_Retract);
-    climbRight = new DoubleSolenoid(null, Constants.climbRightPnumatic_Deploy, Constants.climbRightPnumatic_Retract);
+    climbLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.climbLeftPnumatic_Deploy, Constants.climbLeftPnumatic_Retract);
+    climbRight = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.climbRightPnumatic_Deploy, Constants.climbRightPnumatic_Retract);
 
   }
 

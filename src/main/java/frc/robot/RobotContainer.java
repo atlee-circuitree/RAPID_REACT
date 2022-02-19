@@ -18,19 +18,23 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import frc.robot.commands.DriveWithXbox;
+import frc.robot.commands.FeederPistonCommand;
 import frc.robot.commands.MoveClimbPistonCommand;
 import frc.robot.commands.MoveHookCommand;
 import frc.robot.commands.RecalibrateModules;
+import frc.robot.commands.RunFeederCommand;
 import frc.robot.commands.SmartDashboardCommand;
 import frc.robot.commands.TestDriveCommand;
 import frc.robot.commands.TestRotateModules;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.FeederSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.LimeLightSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
  
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -41,14 +45,15 @@ import frc.robot.subsystems.LimeLightSubsystem;
 public class RobotContainer {
   
   //Controllers
-  public static XboxController Xbox1;
-  public static XboxController Xbox2;
-  public static Joystick Fightstick = new Joystick(2);
+  public static XboxController Xbox1 = new XboxController(0);
+  public static XboxController Xbox2 = new XboxController(1);
+  public Joystick Fightstick = new Joystick(2);
   
   //Subsystems
   private final Drivetrain drivetrain;
   private final LimeLightSubsystem limelight;
   private final ClimbSubsystem climb;
+  private final FeederSubsystem feed;
   
   //Commands
   private final DriveWithXbox driveWithXbox;
@@ -58,7 +63,15 @@ public class RobotContainer {
   private final PerpetualCommand DWXwithSDC;
   private final RecalibrateModules recalibrateModules;
   private final MoveHookCommand MoveHook;
- 
+  private final RunFeederCommand RunFeeder;
+  private final RunFeederCommand StopFeeder;
+
+  //Buttons
+  JoystickButton DriverA = new JoystickButton(Xbox1, XboxController.Button.kA.value);
+  JoystickButton DriverB = new JoystickButton(Xbox1, XboxController.Button.kB.value);
+
+  JoystickButton FightR3 = new JoystickButton(Fightstick, 10);
+  JoystickButton FightOption = new JoystickButton(Fightstick, 8);
 
   public RobotContainer() {
  
@@ -66,6 +79,7 @@ public class RobotContainer {
     drivetrain = new Drivetrain();
     limelight = new LimeLightSubsystem();
     climb = new ClimbSubsystem();
+    feed = new FeederSubsystem();
 
     //Single Commands (One Use)
     driveWithXbox = new DriveWithXbox(drivetrain);
@@ -74,6 +88,8 @@ public class RobotContainer {
     DWXwithSDC = new PerpetualCommand(driveWithXbox.alongWith(smartDashboardCommand));
     testDriveCommand = new TestDriveCommand(drivetrain);
     MoveHook = new MoveHookCommand(Fightstick, climb);
+    RunFeeder = new RunFeederCommand(.5, feed);
+    StopFeeder = new RunFeederCommand(0, feed);
     //testDriveCommand.addRequirements(drivetrain);
     //drivetrain.setDefaultCommand(testDriveCommand);
 
@@ -93,39 +109,19 @@ public class RobotContainer {
     return m_climbCommand;
   }
 
+  public Command feederPistonCommand(boolean goingUp) {
+    Command m_climbCommand = new FeederPistonCommand(goingUp, feed);
+    return m_climbCommand;
+  }
+
+
   private void configureButtonBindings() {
+    
+    DriverA.whileHeld(RunFeeder);
+    DriverB.whileHeld(StopFeeder);
 
-    //Buttons
-    JoystickButton Xbox1_A = new JoystickButton(Xbox1, XboxController.Button.kA.value);
-    JoystickButton Xbox1_B = new JoystickButton(Xbox1, XboxController.Button.kB.value);
-    JoystickButton Xbox1_X = new JoystickButton(Xbox1, XboxController.Button.kX.value);
-    JoystickButton Xbox1_Y = new JoystickButton(Xbox1, XboxController.Button.kY.value);
-    JoystickButton Xbox1_LBumper = new JoystickButton(Xbox1, XboxController.Button.kLeftBumper.value);
-    JoystickButton Xbox1_RBumper = new JoystickButton(Xbox1, XboxController.Button.kRightBumper.value);
-    JoystickButton Xbox1_Start = new JoystickButton(Xbox1, XboxController.Button.kStart.value);
-    JoystickButton Xbox1_Back = new JoystickButton(Xbox1, XboxController.Button.kBack.value);
-
-    JoystickButton Xbox2_A = new JoystickButton(Xbox2, XboxController.Button.kA.value);
-    JoystickButton Xbox2_B = new JoystickButton(Xbox2, XboxController.Button.kB.value);
-    JoystickButton Xbox2_X = new JoystickButton(Xbox2, XboxController.Button.kX.value);
-    JoystickButton Xbox2_Y = new JoystickButton(Xbox2, XboxController.Button.kY.value);
-    JoystickButton Xbox2_LBumper = new JoystickButton(Xbox2, XboxController.Button.kLeftBumper.value);
-    JoystickButton Xbox2_RBumper = new JoystickButton(Xbox2, XboxController.Button.kRightBumper.value);
-    JoystickButton Xbox2_Start = new JoystickButton(Xbox2, XboxController.Button.kStart.value);
-    JoystickButton Xbox2_Back = new JoystickButton(Xbox2, XboxController.Button.kBack.value);
-
-    JoystickButton Fight_1 = new JoystickButton(Fightstick, 1);
-    JoystickButton Fight_2 = new JoystickButton(Fightstick, 2);
-    JoystickButton Fight_3 = new JoystickButton(Fightstick, 1);
-    JoystickButton Fight_4 = new JoystickButton(Fightstick, 2);
-    JoystickButton Fight_5 = new JoystickButton(Fightstick, 1);
-    JoystickButton Fight_6 = new JoystickButton(Fightstick, 2);
-
-    //Button Assignment
-    Fight_1.whenPressed(climbCommand(true));
-    Fight_2.whenPressed(climbCommand(false));
-
-    //Stick Assignment
+    FightOption.whenPressed(feederPistonCommand(true));
+    FightR3.whenPressed(feederPistonCommand(false));
 
   }
 

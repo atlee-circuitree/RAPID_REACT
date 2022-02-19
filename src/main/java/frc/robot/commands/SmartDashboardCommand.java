@@ -74,11 +74,7 @@ public class SmartDashboardCommand extends CommandBase {
   }
 
     //VARS FROM ROBOTCONTAINER AND DRIVETRAIN
-
-    //Robotcontainer vars
-    SmartDashboard.putNumber("Xbox left X value", RobotContainer.Xbox1.getLeftX());
-    SmartDashboard.putNumber("Xbox left Y value", RobotContainer.Xbox1.getLeftY());
-    
+ 
     //Drivetrain display local vars
     String[] splitStringArrayDVT = Drivetrain.drivetrainDashboard.split(";");
     SmartDashboard.putNumber("DVT String Length", splitStringArrayDVT.length);
@@ -105,16 +101,6 @@ public class SmartDashboardCommand extends CommandBase {
 
     }
 
-    //COLOR SENSOR VALUES
-
-    SmartDashboard.putNumber("Red Seen?", SensorSubsystem.isRed());
-
-    //TURRET VALUES
-
-    SmartDashboard.putNumber("Turret Velocity", TurretSubsystem.getVelocity());
-
-    SmartDashboard.putNumber("Turret Position", TurretSubsystem.getTurretPosition());
-  
   }  
 
   @Override

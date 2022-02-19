@@ -167,6 +167,7 @@ public class Drivetrain extends SubsystemBase {
   //------------------------------------------------------------------------------------------------------------------------------------
   //ENUMS
   //------------------------------------------------------------------------------------------------------------------------------------
+  
   public enum SwerveModule{
     FRONT_LEFT, FRONT_RIGHT, REAR_LEFT, REAR_RIGHT
   }
@@ -449,7 +450,6 @@ public class Drivetrain extends SubsystemBase {
     if(encoderValue > 180){
       encoderValue = encoderValue - 360;
     }
-    
 
     return encoderValue;
   }
@@ -498,13 +498,6 @@ public class Drivetrain extends SubsystemBase {
 public double customPID(double target){
   return Math.pow((target - getNavXOutput())/180, 2);
 }
-
-
-
-
-
-
-
 
 //AUTO STUFF
 
