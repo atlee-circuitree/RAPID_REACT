@@ -23,6 +23,7 @@ import frc.robot.commands.MoveClimbPistonCommand;
 import frc.robot.commands.MoveHookCommand;
 import frc.robot.commands.RecalibrateModules;
 import frc.robot.commands.RunFeederCommand;
+import frc.robot.commands.SimpleRunShooterCommand;
 import frc.robot.commands.SmartDashboardCommand;
 import frc.robot.commands.TestDriveCommand;
 import frc.robot.commands.TestRotateModules;
@@ -54,6 +55,7 @@ public class RobotContainer {
   private final LimeLightSubsystem limelight;
   private final ClimbSubsystem climb;
   private final FeederSubsystem feed;
+  private final TurretSubsystem turret;
   
   //Commands
   private final DriveWithXbox driveWithXbox;
@@ -80,6 +82,7 @@ public class RobotContainer {
     limelight = new LimeLightSubsystem();
     climb = new ClimbSubsystem();
     feed = new FeederSubsystem();
+    turret = new TurretSubsystem();
 
     //Single Commands (One Use)
     driveWithXbox = new DriveWithXbox(drivetrain);
@@ -114,11 +117,15 @@ public class RobotContainer {
     return m_climbCommand;
   }
 
+  public Command turretCommand(double velocity) {
+    Command m_turretCommand = new SimpleRunShooterCommand(velocity, turret);
+    return m_turretCommand;
+  }
 
   private void configureButtonBindings() {
     
     DriverA.whileHeld(RunFeeder);
-    DriverB.whileHeld(StopFeeder);
+    DriverB.whileHeld(turretCommand(4800));
 
     FightOption.whenPressed(feederPistonCommand(true));
     FightR3.whenPressed(feederPistonCommand(false));

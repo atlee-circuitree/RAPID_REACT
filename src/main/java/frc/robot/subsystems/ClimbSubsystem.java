@@ -16,28 +16,28 @@ import frc.robot.Constants;
 public class ClimbSubsystem extends SubsystemBase {
 
   CANSparkMax hookMotor = null;
-  DoubleSolenoid climbLeft = null;
-  DoubleSolenoid climbRight = null;
+  //DoubleSolenoid climbLeft = null;
+  //DoubleSolenoid climbRight = null;
  
   public ClimbSubsystem() {
 
     hookMotor = new CANSparkMax(Constants.hookMotorPort, MotorType.kBrushless);
-    climbLeft = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.climbLeftPnumatic_Deploy, Constants.climbLeftPnumatic_Retract);
-    climbRight = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.climbRightPnumatic_Deploy, Constants.climbRightPnumatic_Retract);
+    //climbLeft = new DoubleSolenoid(null, Constants.climbLeftPnumatic_Deploy, Constants.climbLeftPnumatic_Retract);
+    //climbRight = new DoubleSolenoid(null, Constants.climbRightPnumatic_Deploy, Constants.climbRightPnumatic_Retract);
 
   }
 
   public void extendArm() {
 
-    climbLeft.set(Value.kForward);
-    climbRight.set(Value.kForward);
+    //climbLeft.set(Value.kForward);
+    //climbRight.set(Value.kForward);
 
   }
 
   public void retractArm() {
 
-    climbLeft.set(Value.kReverse);
-    climbRight.set(Value.kReverse);
+    //climbLeft.set(Value.kReverse);
+    //climbRight.set(Value.kReverse);
 
   }
 
