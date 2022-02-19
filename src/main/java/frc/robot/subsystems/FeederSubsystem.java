@@ -16,24 +16,10 @@ import frc.robot.Constants;
 public class FeederSubsystem extends SubsystemBase {
 
   CANSparkMax feederMotor = null;
-  DoubleSolenoid feederLift = null;
-   
+  
   public FeederSubsystem() {
 
     feederMotor = new CANSparkMax(Constants.feederMotorPort, MotorType.kBrushless);
-    feederLift = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.kickoutPnumatic_Deploy, Constants.kickoutPnumatic_Retract);
-     
-  }
-
-  public void pushOutFeeder() {
-
-    feederLift.set(Value.kForward);
-   
-  }
-
-  public void pullInFeeder() {
-
-    feederLift.set(Value.kReverse);
    
   }
 

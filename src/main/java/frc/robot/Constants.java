@@ -49,22 +49,6 @@ public final class Constants {
     public static final int hookMotorPort = 14;
     public static final int turretMotorPort = 13;
 
-    //Solenolds
-
-    public static final int kickoutPnumatic = 12;
-    public static final int climbLeftPnumatic = 0;
-    public static final int climbRightPnumatic = 14;
-    public static final int shootPnumatic = 6;
-
-    public static final int kickoutPnumatic_Deploy = 12;
-    public static final int kickoutPnumatic_Retract = 13;
-    public static final int climbLeftPnumatic_Deploy = 0;
-    public static final int climbLeftPnumatic_Retract = 1;
-    public static final int climbRightPnumatic_Deploy = 14;
-    public static final int climbRightPnumatic_Retract = 15;
-    public static final int shootPnumatic_Deploy = 6;
-    public static final int shootPnumatic_Retract = 7;
-
     //Sensors
 
     public static final I2C.Port i2cPort = I2C.Port.kOnboard;

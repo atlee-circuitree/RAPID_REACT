@@ -6,9 +6,12 @@ package frc.robot;
 
 import java.util.List;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -18,11 +21,10 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import frc.robot.commands.DriveWithXbox;
-import frc.robot.commands.FeederPistonCommand;
-import frc.robot.commands.MoveClimbPistonCommand;
 import frc.robot.commands.MoveHookCommand;
 import frc.robot.commands.RecalibrateModules;
 import frc.robot.commands.RunFeederCommand;
+import frc.robot.commands.SimpleRunShooter;
 import frc.robot.commands.SmartDashboardCommand;
 import frc.robot.commands.TestDriveCommand;
 import frc.robot.commands.TestRotateModules;
@@ -54,6 +56,7 @@ public class RobotContainer {
   private final LimeLightSubsystem limelight;
   private final ClimbSubsystem climb;
   private final FeederSubsystem feed;
+  private final TurretSubsystem turret;
   
   //Commands
   private final DriveWithXbox driveWithXbox;
@@ -80,6 +83,7 @@ public class RobotContainer {
     limelight = new LimeLightSubsystem();
     climb = new ClimbSubsystem();
     feed = new FeederSubsystem();
+    turret = new TurretSubsystem();
 
     //Single Commands (One Use)
     driveWithXbox = new DriveWithXbox(drivetrain);
@@ -104,25 +108,18 @@ public class RobotContainer {
   }
 
   //Mult Commands (Many Uses)
-  public Command climbCommand(boolean goingUp) {
-    Command m_climbCommand = new MoveClimbPistonCommand(goingUp, climb);
-    return m_climbCommand;
+  public Command simpleTurretCommand(double velocity) {
+    Command m_turretCommand = new SimpleRunShooter(velocity, turret);
+    return m_turretCommand;
   }
 
-  public Command feederPistonCommand(boolean goingUp) {
-    Command m_climbCommand = new FeederPistonCommand(goingUp, feed);
-    return m_climbCommand;
-  }
-
+  
 
   private void configureButtonBindings() {
     
     DriverA.whileHeld(RunFeeder);
-    DriverB.whileHeld(StopFeeder);
-
-    FightOption.whenPressed(feederPistonCommand(true));
-    FightR3.whenPressed(feederPistonCommand(false));
-
+    DriverB.whileHeld(simpleTurretCommand(1200));
+    
   }
 
   public Command getAutonomousCommand() {
