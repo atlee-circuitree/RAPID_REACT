@@ -87,7 +87,7 @@ public class RobotContainer {
     //Single Commands (One Use)
     driveWithXbox = new DriveWithXbox(drivetrain);
     driveWithXbox.addRequirements(drivetrain);
-    smartDashboardCommand = new SmartDashboardCommand(limelight);
+    smartDashboardCommand = new SmartDashboardCommand(limelight, turret);
     DWXwithSDC = new PerpetualCommand(driveWithXbox.alongWith(smartDashboardCommand));
     testDriveCommand = new TestDriveCommand(drivetrain);
     MoveHook = new MoveHookCommand(Fightstick, climb);
@@ -126,10 +126,7 @@ public class RobotContainer {
     
     DriverA.whileHeld(RunFeeder);
     DriverB.whileHeld(turretCommand(4800));
-
-    FightOption.whenPressed(feederPistonCommand(true));
-    FightR3.whenPressed(feederPistonCommand(false));
-
+ 
   }
 
   public Command getAutonomousCommand() {

@@ -45,7 +45,7 @@ public class TurretSubsystem extends SubsystemBase {
 
   public void runTurretWithVelocity(double velocity) {
 
-    topShootMotor.set(ControlMode.Velocity, velocity);
+    topShootMotor.set(ControlMode.Velocity, -velocity);
     bottomShootMotor.set(ControlMode.Velocity, velocity);
 
   }
