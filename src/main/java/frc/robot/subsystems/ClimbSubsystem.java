@@ -16,8 +16,8 @@ import frc.robot.Constants;
 public class ClimbSubsystem extends SubsystemBase {
 
   CANSparkMax hookMotor = null;
-  //DoubleSolenoid climbLeft = null;
-  //DoubleSolenoid climbRight = null;
+  DoubleSolenoid climbLeft = null;
+  DoubleSolenoid climbRight = null;
  
   public ClimbSubsystem() {
 
@@ -26,6 +26,7 @@ public class ClimbSubsystem extends SubsystemBase {
     //climbRight = new DoubleSolenoid(null, Constants.climbRightPnumatic_Deploy, Constants.climbRightPnumatic_Retract);
 
   }
+  
 
   public void extendArm() {
 

@@ -38,10 +38,12 @@ import frc.robot.subsystems.TurretSubsystem;
 public class SmartDashboardCommand extends CommandBase {
 
   private final LimeLightSubsystem limelight;
+  private final TurretSubsystem turret;
  
-  public SmartDashboardCommand(LimeLightSubsystem ls) {
+  public SmartDashboardCommand(LimeLightSubsystem ls, TurretSubsystem ts) {
 
     limelight = ls;
+    turret = ts;
 
   }
 
@@ -100,6 +102,19 @@ public class SmartDashboardCommand extends CommandBase {
       SmartDashboard.putString(splitSplitStringArrayLIM[0], splitSplitStringArrayLIM[1]);
 
     }
+
+ 
+    String[] splitStringArrayTUR = TurretSubsystem.turretDashboard.split(";");
+    SmartDashboard.putNumber("TUR String Length", splitStringArrayTUR.length);
+    SmartDashboard.putString("TUR String", TurretSubsystem.turretDashboard);
+    
+    for(int i = 0; i <= splitStringArrayTUR.length-1; i++){
+
+      String[] splitSplitStringArrayTUR = splitStringArrayTUR[i].split("/");
+      SmartDashboard.putString(splitSplitStringArrayTUR[0], splitSplitStringArrayTUR[1]);
+
+    }
+
 
   }  
 

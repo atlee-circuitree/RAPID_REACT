@@ -21,6 +21,7 @@ import frc.robot.commands.DriveWithXbox;
 import frc.robot.commands.FeederPistonCommand;
 import frc.robot.commands.MoveClimbPistonCommand;
 import frc.robot.commands.MoveHookCommand;
+import frc.robot.commands.MoveTurretCommand;
 import frc.robot.commands.RecalibrateModules;
 import frc.robot.commands.RunFeederCommand;
 import frc.robot.commands.SimpleRunShooterCommand;
@@ -64,13 +65,15 @@ public class RobotContainer {
   private final SmartDashboardCommand smartDashboardCommand;
   private final PerpetualCommand DWXwithSDC;
   private final RecalibrateModules recalibrateModules;
-  private final MoveHookCommand MoveHook;
   private final RunFeederCommand RunFeeder;
   private final RunFeederCommand StopFeeder;
 
   //Buttons
   JoystickButton DriverA = new JoystickButton(Xbox1, XboxController.Button.kA.value);
   JoystickButton DriverB = new JoystickButton(Xbox1, XboxController.Button.kB.value);
+  JoystickButton DriverX = new JoystickButton(Xbox1, XboxController.Button.kX.value);
+  JoystickButton DriverY = new JoystickButton(Xbox1, XboxController.Button.kY.value);
+
 
   JoystickButton FightR3 = new JoystickButton(Fightstick, 10);
   JoystickButton FightOption = new JoystickButton(Fightstick, 8);
@@ -90,7 +93,6 @@ public class RobotContainer {
     smartDashboardCommand = new SmartDashboardCommand(limelight, turret);
     DWXwithSDC = new PerpetualCommand(driveWithXbox.alongWith(smartDashboardCommand));
     testDriveCommand = new TestDriveCommand(drivetrain);
-    MoveHook = new MoveHookCommand(Fightstick, climb);
     RunFeeder = new RunFeederCommand(.5, feed);
     StopFeeder = new RunFeederCommand(0, feed);
     //testDriveCommand.addRequirements(drivetrain);
@@ -100,10 +102,11 @@ public class RobotContainer {
     testRotateModules = new TestRotateModules(drivetrain);
 
     //Other Setup
+    limelight.EnableLED();
     configureButtonBindings();
     recalibrateModules = new RecalibrateModules(drivetrain, Xbox1);
     drivetrain.setDefaultCommand(DWXwithSDC);
-
+    
   }
 
   //Mult Commands (Many Uses)
@@ -117,16 +120,33 @@ public class RobotContainer {
     return m_climbCommand;
   }
 
-  public Command turretCommand(double velocity) {
+  public Command shootAtVelocity(double velocity) {
     Command m_turretCommand = new SimpleRunShooterCommand(velocity, turret);
     return m_turretCommand;
   }
 
+  public Command turnTurret(double speed) {
+    Command m_turretCommand = new MoveTurretCommand(speed, turret);
+    return m_turretCommand;
+  }
+
+  public Command moveHook(double speed) {
+    Command m_turretCommand = new MoveHookCommand(speed, climb);
+    return m_turretCommand;
+  }
+
+
   private void configureButtonBindings() {
     
     DriverA.whileHeld(RunFeeder);
-    DriverB.whileHeld(turretCommand(4800));
+    DriverB.whileHeld(shootAtVelocity(4800));
+    DriverX.whileHeld(moveHook(-.4));
+    DriverY.whileHeld(moveHook(.4));
+
+    FightOption.whenPressed(feederPistonCommand(true));
+    FightR3.whenPressed(climbCommand(true));
  
+
   }
 
   public Command getAutonomousCommand() {

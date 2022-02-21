@@ -51,17 +51,17 @@ public final class Constants {
 
     //Solenolds
 
-    public static final int kickoutPnumatic = 12;
-    public static final int climbLeftPnumatic = 0;
-    public static final int climbRightPnumatic = 14;
-    public static final int shootPnumatic = 6;
+    public static final int kickoutPnumatic = 0;
+    public static final int climbLeftPnumatic = 1;
+    public static final int climbRightPnumatic = 2;
+    public static final int shootPnumatic = 3;
 
-    public static final int kickoutPnumatic_Deploy = 12;
-    public static final int kickoutPnumatic_Retract = 13;
-    public static final int climbLeftPnumatic_Deploy = 0;
-    public static final int climbLeftPnumatic_Retract = 1;
-    public static final int climbRightPnumatic_Deploy = 14;
-    public static final int climbRightPnumatic_Retract = 15;
+    public static final int kickoutPnumatic_Deploy = 0;
+    public static final int kickoutPnumatic_Retract = 1;
+    public static final int climbLeftPnumatic_Deploy = 2;
+    public static final int climbLeftPnumatic_Retract = 3;
+    public static final int climbRightPnumatic_Deploy = 4;
+    public static final int climbRightPnumatic_Retract = 5;
     public static final int shootPnumatic_Deploy = 6;
     public static final int shootPnumatic_Retract = 7;
 
