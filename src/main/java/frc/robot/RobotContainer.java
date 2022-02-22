@@ -22,7 +22,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import frc.robot.commands.DriveWithXbox;
 import frc.robot.commands.FeederPistonCommand;
 import frc.robot.commands.MoveClimbPistonCommand;
-import frc.robot.commands.MoveHookCommand;
+import frc.robot.commands.MoveChainCommand;
 import frc.robot.commands.MoveTurretCommand;
 import frc.robot.commands.RecalibrateModules;
 import frc.robot.commands.RunFeederCommand;
@@ -68,7 +68,7 @@ public class RobotContainer {
   private final TestRotateModules testRotateModules;
   private final TestDriveCommand testDriveCommand;
   private final SmartDashboardCommand smartDashboardCommand;
-  private final PerpetualCommand DWXwithSDC;
+  private final PerpetualCommand DWX_SDC_TUR;
   private final RecalibrateModules recalibrateModules;
   private final RunFeederCommand RunFeeder;
   private final RunFeederCommand StopFeeder;
@@ -101,41 +101,8 @@ public class RobotContainer {
   JoystickButton FightY = new JoystickButton(Fightstick, 4);
   JoystickButton FightLB = new JoystickButton(Fightstick, 5);
   JoystickButton FightRB = new JoystickButton(Fightstick, 10);
+  
 
-  public RobotContainer() {
- 
-    Compress = new Compressor(PneumaticsModuleType.REVPH);
- 
-    Compress.enableAnalog(0, 100);
-
-    //Subsystems
-    drivetrain = new Drivetrain();
-    limelight = new LimeLightSubsystem();
-    climb = new ClimbSubsystem();
-    feed = new FeederSubsystem();
-    turret = new TurretSubsystem();
-
-    //Single Commands (One Use)
-    driveWithXbox = new DriveWithXbox(drivetrain);
-    driveWithXbox.addRequirements(drivetrain);
-    smartDashboardCommand = new SmartDashboardCommand(limelight, turret);
-    DWXwithSDC = new PerpetualCommand(driveWithXbox.alongWith(smartDashboardCommand));
-    testDriveCommand = new TestDriveCommand(drivetrain);
-    RunFeeder = new RunFeederCommand(.5, feed);
-    StopFeeder = new RunFeederCommand(0, feed);
-    //testDriveCommand.addRequirements(drivetrain);
-    //drivetrain.setDefaultCommand(testDriveCommand);
-
-    //Auto Setup
-    testRotateModules = new TestRotateModules(drivetrain);
-
-    //Other Setup
-    limelight.EnableLED();
-    configureButtonBindings();
-    recalibrateModules = new RecalibrateModules(drivetrain, Xbox1);
-    drivetrain.setDefaultCommand(DWXwithSDC);
-    
-  }
 
   //Mult Commands (Many Uses)
   public Command climbCommand(boolean goingUp) {
@@ -158,8 +125,8 @@ public class RobotContainer {
     return m_turretCommand;
   }
 
-  public Command moveHook(double speed) {
-    Command m_turretCommand = new MoveHookCommand(speed, climb);
+  public Command moveChain(double speed) {
+    Command m_turretCommand = new MoveChainCommand(speed, climb);
     return m_turretCommand;
   }
 
@@ -168,32 +135,81 @@ public class RobotContainer {
     return m_climbCommand;
   }
 
-  private void configureButtonBindings() {
-    
-    DriverA.whileHeld(RunFeeder);
-    DriverB.whileHeld(shootAtVelocity(4800));
-    DriverX.whileHeld(null);
-    DriverY.whileHeld(null);
-    DriverL.whileHeld(null);
-    DriverR.whileHeld(null);
-    DriverStart.whileHeld(null);
-    DriverBack.whileHeld(null);
 
-    OperatorA.whileHeld(turretPistonCommand());
-    OperatorB.whileHeld(null);
-    OperatorX.whileHeld(null);
-    OperatorY.whileHeld(null);
-    OperatorL.whileHeld(turnTurret(-.4));
-    OperatorR.whileHeld(turnTurret(.4));
-    Operatortart.whileHeld(null);
-    OperatorB.whileHeld(null);
-
-    FightL3.whenPressed(feederPistonCommand(true));
-    FightR3.whenPressed(feederPistonCommand(false));
+  public RobotContainer() {
  
+    Compress = new Compressor(PneumaticsModuleType.REVPH);
+ 
+    Compress.enableDigital();
 
+    //Subsystems
+    drivetrain = new Drivetrain();
+    limelight = new LimeLightSubsystem();
+    climb = new ClimbSubsystem();
+    feed = new FeederSubsystem();
+    turret = new TurretSubsystem();
+
+    //Single Commands (One Use)
+    driveWithXbox = new DriveWithXbox(drivetrain);
+    driveWithXbox.addRequirements(drivetrain);
+    smartDashboardCommand = new SmartDashboardCommand(limelight, turret);
+    DWX_SDC_TUR = new PerpetualCommand(driveWithXbox.alongWith(smartDashboardCommand.alongWith(turnTurret(RobotContainer.Xbox2.getLeftX()))));
+    testDriveCommand = new TestDriveCommand(drivetrain);
+    RunFeeder = new RunFeederCommand(.5, feed);
+    StopFeeder = new RunFeederCommand(0, feed);
+    //testDriveCommand.addRequirements(drivetrain);
+    //drivetrain.setDefaultCommand(testDriveCommand);
+
+    //Auto Setup
+    testRotateModules = new TestRotateModules(drivetrain);
+
+    //Other Setup
+    limelight.EnableLED();
+    configureButtonBindings();
+    recalibrateModules = new RecalibrateModules(drivetrain, Xbox1);
+    drivetrain.setDefaultCommand(DWX_SDC_TUR);
+    
   }
 
+  
+
+  private void configureButtonBindings() {
+    
+    //Player 1
+    DriverA.whileHeld(RunFeeder);
+    DriverB.whileHeld(shootAtVelocity(4800));
+    //DriverX.whileHeld(null);
+    //DriverY.whileHeld(null);
+    //DriverL.whileHeld(null);
+    //DriverR.whileHeld(null);
+    //DriverStart.whileHeld(null);
+    //DriverBack.whileHeld(null);
+
+    //Player 2
+    OperatorA.whileHeld(turretPistonCommand());
+    //OperatorB.whileHeld(null);
+    //OperatorX.whileHeld(null);
+    //OperatorY.whileHeld(null);
+    OperatorL.whileHeld(turnTurret(-.4));
+    OperatorR.whileHeld(turnTurret(.4));
+    //OperatorStart.whileHeld(null);
+    //OperatorBack.whileHeld(null);
+
+
+    //Fightstick Functions
+    //FightShare.whenPressed(null);
+    //FightOption.whenPressed(null);
+    FightL3.whenPressed(feederPistonCommand(true));
+    FightR3.whenPressed(feederPistonCommand(false));
+    if(Fightstick.getPOV() == 0){
+      moveChain(0.5);
+    }
+    else if(Fightstick.getPOV() == 180){
+      moveChain(-0.5);
+    }
+    
+ 
+  }
   public Command getAutonomousCommand() {
     // Create config for trajectory
     

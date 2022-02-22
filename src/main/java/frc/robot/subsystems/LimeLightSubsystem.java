@@ -182,6 +182,32 @@ public class LimeLightSubsystem extends SubsystemBase {
     limelightDashboard = "Limelight Horizontal/" + dbl_thor + ";";
     limelightDashboard = limelightDashboard + "Limelight Vertical/" + dbl_tvert + ";";
   }
+
+
+  public double getDistanceToTarget(double speed){
+
+    double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+  
+    double targetOffsetAngle_Vertical = ty;
+
+    // how many degrees back is your limelight rotated from perfectly vertical?
+    double limelightMountAngleDegrees = 45.0;
+
+    // distance from the center of the Limelight lens to the floor
+    double limelightHeightInches = 26.0;
+
+    // distance from the target to the floor
+    double goalHeightInches = 100.0;
+
+    double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+    //calculate distance
+    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightHeightInches)/Math.tan(angleToGoalRadians);
+
+    return distanceFromLimelightToGoalInches;
+
+  }
  
 }
 

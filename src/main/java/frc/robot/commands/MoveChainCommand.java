@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimbSubsystem;
 
 
-public class MoveHookCommand extends CommandBase {
+public class MoveChainCommand extends CommandBase {
 
   ClimbSubsystem m_subsystem;
   double targetSpeed;
    
-  public MoveHookCommand(double speed, ClimbSubsystem climb) {
+  public MoveChainCommand(double speed, ClimbSubsystem climb) {
  
     m_subsystem = climb;
     addRequirements(m_subsystem);

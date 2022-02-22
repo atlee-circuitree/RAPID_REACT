@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import frc.robot.Constants;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -38,5 +39,11 @@ public class SensorSubsystem extends SubsystemBase {
     }
 
   }
+ 
+  public void startUSBCamera(){
+    CameraServer.startAutomaticCapture();
+  }
+
+
 
 }

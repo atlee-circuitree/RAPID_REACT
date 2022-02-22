@@ -69,7 +69,7 @@ public class TurretSubsystem extends PIDSubsystem {
   
     turretDashboard = "Encoder PWM Position/" + encoder.getPwmPosition() + ";";
     turretDashboard = turretDashboard + "Encoder lastValue" + encoder.lastValue + ";";
-    //turretDashboard = turretDashboard + "Encoder SparkMax" + turretMotor.getEncoder(Type.kQuadrature, 360);
+  
   
   }
 
@@ -93,7 +93,7 @@ public class TurretSubsystem extends PIDSubsystem {
 
   public void retract() {
 
-    //shootPiston.set(Value.kReverse);
+    shootPiston.set(Value.kReverse);
    
   }
 
@@ -107,6 +107,9 @@ public class TurretSubsystem extends PIDSubsystem {
   public void turnTurret(double speed) {
 
     turretMotor.set(speed);
+
+    System.out.print("Encoder Pos");
+    System.out.println(encoder.getPwmPosition());
 
   }
 

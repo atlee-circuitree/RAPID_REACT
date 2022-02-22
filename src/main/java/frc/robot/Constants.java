@@ -35,35 +35,30 @@ public final class Constants {
     public static final int rearLeftRotMotorPort = 5;
     public static final int rearRightRotMotorPort = 7;
 
-    public static final int frontLeftRotEncoderPort = 19;
-    public static final int frontRightRotEncoderPort = 20;
-    public static final int rearLeftRotEncoderPort = 21;
-    public static final int rearRightRotEncoderPort = 22;
+    public static final int frontLeftRotEncoderPort = 11;
+    public static final int frontRightRotEncoderPort = 9;
+    public static final int rearLeftRotEncoderPort = 10;
+    public static final int rearRightRotEncoderPort = 12;
 
-    public static final int feederMotorPort = 10;
+    public static final int feederMotorPort = 20;
 
     //Other Motors
     
     public static final int topShootMotorPort = 11;
     public static final int bottomShootMotorPort = 12;
-    public static final int hookMotorPort = 14;
-    public static final int turretMotorPort = 13;
+    public static final int hookMotorPort = 21;
+    public static final int turretMotorPort = 22;
 
     //Solenolds
-
-    public static final int kickoutPnumatic = 0;
-    public static final int climbLeftPnumatic = 1;
-    public static final int climbRightPnumatic = 2;
-    public static final int shootPnumatic = 3;
-
-    public static final int kickoutPnumatic_Deploy = 0;
-    public static final int kickoutPnumatic_Retract = 1;
-    public static final int climbLeftPnumatic_Deploy = 2;
-    public static final int climbLeftPnumatic_Retract = 3;
-    public static final int climbRightPnumatic_Deploy = 4;
-    public static final int climbRightPnumatic_Retract = 5;
-    public static final int shootPnumatic_Deploy = 6;
-    public static final int shootPnumatic_Retract = 7;
+ 
+    public static final int kickoutPnumatic_Deploy = 9;
+    public static final int kickoutPnumatic_Retract = 14;
+    public static final int climbLeftPnumatic_Deploy = 10;
+    public static final int climbLeftPnumatic_Retract = 15;
+    public static final int climbRightPnumatic_Deploy = 0;
+    public static final int climbRightPnumatic_Retract = 1;
+    public static final int shootPnumatic_Deploy = 2;
+    public static final int shootPnumatic_Retract = 3;
 
     //Sensors
 
