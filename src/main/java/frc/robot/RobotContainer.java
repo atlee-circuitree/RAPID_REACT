@@ -30,6 +30,7 @@ import frc.robot.commands.SimpleRunShooterCommand;
 import frc.robot.commands.SmartDashboardCommand;
 import frc.robot.commands.TestDriveCommand;
 import frc.robot.commands.TestRotateModules;
+import frc.robot.commands.TurretPistonCommand;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.FeederSubsystem;
@@ -77,9 +78,29 @@ public class RobotContainer {
   JoystickButton DriverB = new JoystickButton(Xbox1, XboxController.Button.kB.value);
   JoystickButton DriverX = new JoystickButton(Xbox1, XboxController.Button.kX.value);
   JoystickButton DriverY = new JoystickButton(Xbox1, XboxController.Button.kY.value);
+  JoystickButton DriverL = new JoystickButton(Xbox1, XboxController.Button.kLeftBumper.value);
+  JoystickButton DriverR = new JoystickButton(Xbox1, XboxController.Button.kRightBumper.value);
+  JoystickButton DriverStart = new JoystickButton(Xbox1, XboxController.Button.kStart.value);
+  JoystickButton DriverBack = new JoystickButton(Xbox1, XboxController.Button.kBack.value);
 
-  JoystickButton FightR3 = new JoystickButton(Fightstick, 10);
+  JoystickButton OperatorA = new JoystickButton(Xbox2, XboxController.Button.kA.value);
+  JoystickButton OperatorB = new JoystickButton(Xbox2, XboxController.Button.kB.value);
+  JoystickButton OperatorX = new JoystickButton(Xbox2, XboxController.Button.kX.value);
+  JoystickButton OperatorY = new JoystickButton(Xbox2, XboxController.Button.kY.value);
+  JoystickButton OperatorL = new JoystickButton(Xbox2, XboxController.Button.kLeftBumper.value);
+  JoystickButton OperatorR = new JoystickButton(Xbox2, XboxController.Button.kRightBumper.value);
+  JoystickButton OperatorStart = new JoystickButton(Xbox2, XboxController.Button.kStart.value);
+  JoystickButton OperatorBack = new JoystickButton(Xbox2, XboxController.Button.kBack.value);
+   
+  JoystickButton FightShare = new JoystickButton(Fightstick, 7);
   JoystickButton FightOption = new JoystickButton(Fightstick, 8);
+  JoystickButton FightL3 = new JoystickButton(Fightstick, 9);
+  JoystickButton FightR3 = new JoystickButton(Fightstick, 10);
+  JoystickButton FightAX = new JoystickButton(Fightstick, 1);
+  JoystickButton FightB = new JoystickButton(Fightstick, 2);
+  JoystickButton FightY = new JoystickButton(Fightstick, 4);
+  JoystickButton FightLB = new JoystickButton(Fightstick, 5);
+  JoystickButton FightRB = new JoystickButton(Fightstick, 10);
 
   public RobotContainer() {
  
@@ -142,15 +163,32 @@ public class RobotContainer {
     return m_turretCommand;
   }
 
+  public Command turretPistonCommand() {
+    Command m_climbCommand = new TurretPistonCommand(turret);
+    return m_climbCommand;
+  }
 
   private void configureButtonBindings() {
     
     DriverA.whileHeld(RunFeeder);
     DriverB.whileHeld(shootAtVelocity(4800));
-    DriverX.whileHeld(turnTurret(-.4));
-    DriverY.whileHeld(turnTurret(.4));
+    DriverX.whileHeld(null);
+    DriverY.whileHeld(null);
+    DriverL.whileHeld(null);
+    DriverR.whileHeld(null);
+    DriverStart.whileHeld(null);
+    DriverBack.whileHeld(null);
 
-    FightOption.whenPressed(feederPistonCommand(true));
+    OperatorA.whileHeld(turretPistonCommand());
+    OperatorB.whileHeld(null);
+    OperatorX.whileHeld(null);
+    OperatorY.whileHeld(null);
+    OperatorL.whileHeld(turnTurret(-.4));
+    OperatorR.whileHeld(turnTurret(.4));
+    Operatortart.whileHeld(null);
+    OperatorB.whileHeld(null);
+
+    FightL3.whenPressed(feederPistonCommand(true));
     FightR3.whenPressed(feederPistonCommand(false));
  
 
