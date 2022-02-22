@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
  * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  
+ 
     //Drivetrain Motors
 
     public static final int frontLeftDrvMotorPort = 4;

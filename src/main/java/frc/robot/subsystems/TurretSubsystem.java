@@ -52,7 +52,7 @@ public class TurretSubsystem extends PIDSubsystem {
   static TalonSRX topShootMotor = null;
   static TalonSRX bottomShootMotor = null;
   CANSparkMax turretMotor = null;
-  //DoubleSolenoid shootPiston = null;
+  DoubleSolenoid shootPiston = null;
 
   public static String turretDashboard;
 
@@ -62,7 +62,7 @@ public class TurretSubsystem extends PIDSubsystem {
     topShootMotor = new TalonSRX(Constants.topShootMotorPort);
     bottomShootMotor = new TalonSRX(Constants.bottomShootMotorPort);
     turretMotor = new CANSparkMax(Constants.turretMotorPort, MotorType.kBrushed);
-    //shootPiston = new DoubleSolenoid(null, Constants.shootPnumatic_Deploy, Constants.shootPnumatic_Retract);
+    shootPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.shootPnumatic_Deploy, Constants.shootPnumatic_Retract);
   }
   @Override
   public void periodic() {
@@ -87,7 +87,7 @@ public class TurretSubsystem extends PIDSubsystem {
 
   public void extend() {
 
-    //shootPiston.set(Value.kForward);
+    shootPiston.set(Value.kForward);
    
   }
 

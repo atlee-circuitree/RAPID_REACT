@@ -6,8 +6,10 @@ package frc.robot;
 
 import java.util.List;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -45,7 +47,9 @@ import frc.robot.subsystems.TurretSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  
+ 
+  Compressor Compress = null;
+
   //Controllers
   public static XboxController Xbox1 = new XboxController(0);
   public static XboxController Xbox2 = new XboxController(1);
@@ -74,12 +78,15 @@ public class RobotContainer {
   JoystickButton DriverX = new JoystickButton(Xbox1, XboxController.Button.kX.value);
   JoystickButton DriverY = new JoystickButton(Xbox1, XboxController.Button.kY.value);
 
-
   JoystickButton FightR3 = new JoystickButton(Fightstick, 10);
   JoystickButton FightOption = new JoystickButton(Fightstick, 8);
 
   public RobotContainer() {
  
+    Compress = new Compressor(PneumaticsModuleType.REVPH);
+ 
+    Compress.enableAnalog(0, 100);
+
     //Subsystems
     drivetrain = new Drivetrain();
     limelight = new LimeLightSubsystem();
@@ -140,11 +147,11 @@ public class RobotContainer {
     
     DriverA.whileHeld(RunFeeder);
     DriverB.whileHeld(shootAtVelocity(4800));
-    DriverX.whileHeld(moveHook(-.4));
-    DriverY.whileHeld(moveHook(.4));
+    DriverX.whileHeld(turnTurret(-.4));
+    DriverY.whileHeld(turnTurret(.4));
 
     FightOption.whenPressed(feederPistonCommand(true));
-    FightR3.whenPressed(climbCommand(true));
+    FightR3.whenPressed(feederPistonCommand(false));
  
 
   }
