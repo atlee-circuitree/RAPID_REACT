@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,6 +25,7 @@ public class TurretSubsystem extends PIDSubsystem {
 
   // Giant Chunk of Copy-Paste Code
   // https://cdn.shopify.com/s/files/1/1518/8108/files/Armabot_A0085_Turret240_Encoder_Board_RevB.PDF
+  /*
   public class AS5600EncoderPwm {
     private final SensorCollection sensors;
     private volatile int lastValue = Integer.MIN_VALUE;
@@ -44,15 +46,19 @@ public class TurretSubsystem extends PIDSubsystem {
     return actualValue;
     }
    }
+   */
 
-  private final WPI_TalonSRX yourTalon = new WPI_TalonSRX(1);
-  private final AS5600EncoderPwm encoder = new
-  AS5600EncoderPwm(yourTalon.getSensorCollection());
+  //private final WPI_TalonSRX yourTalon = new WPI_TalonSRX(1);
+  //private final AS5600EncoderPwm encoder = new
+  //AS5600EncoderPwm(yourTalon.getSensorCollection());
    
-  static TalonSRX topShootMotor = null;
-  static TalonSRX bottomShootMotor = null;
+  TalonSRX topShootMotor = null;
+  TalonSRX bottomShootMotor = null;
+  
   CANSparkMax turretMotor = null;
-  DoubleSolenoid shootPiston = null;
+  Encoder turretEncoder = null;
+  
+  DoubleSolenoid shootPiston = new DoubleSolenoid(15 , PneumaticsModuleType.REVPH, Constants.shootPnumatic_Deploy, Constants.shootPnumatic_Retract);
 
   public static String turretDashboard;
 
@@ -61,14 +67,17 @@ public class TurretSubsystem extends PIDSubsystem {
     super(new PIDController(0, 0, 0));
     topShootMotor = new TalonSRX(Constants.topShootMotorPort);
     bottomShootMotor = new TalonSRX(Constants.bottomShootMotorPort);
+    
     turretMotor = new CANSparkMax(Constants.turretMotorPort, MotorType.kBrushed);
-    shootPiston = new DoubleSolenoid(PneumaticsModuleType.REVPH, Constants.shootPnumatic_Deploy, Constants.shootPnumatic_Retract);
+    turretEncoder = new Encoder(0, 1);
+
+    
+
   }
   @Override
   public void periodic() {
   
-    turretDashboard = "Encoder PWM Position/" + encoder.getPwmPosition() + ";";
-    turretDashboard = turretDashboard + "Encoder lastValue" + encoder.lastValue + ";";
+    turretDashboard = "Encoder PWM Position/" + turretEncoder.get() + ";";
   
   
   }
@@ -78,12 +87,12 @@ public class TurretSubsystem extends PIDSubsystem {
   }
 
   public double getMeasurement() {
-    return encoder.getPwmPosition();
+    return 0;
   }
 
-  public double getLastEncoder() {
-    return encoder.lastValue;
-  }
+  //public double getLastEncoder() {
+  //  return encoder.lastValue;
+  //}
 
   public void extend() {
 
@@ -109,14 +118,8 @@ public class TurretSubsystem extends PIDSubsystem {
     turretMotor.set(speed);
 
     System.out.print("Encoder Pos");
-    System.out.println(encoder.getPwmPosition());
+    System.out.println(turretEncoder.get());
 
   }
-
-  public static double getVelocity() {
-
-    return (topShootMotor.getSelectedSensorVelocity() + bottomShootMotor.getSelectedSensorVelocity()) / 2;
-
-  }
-
+ 
 }

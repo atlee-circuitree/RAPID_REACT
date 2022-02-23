@@ -28,6 +28,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.LimeLightSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
@@ -78,6 +79,8 @@ public class SmartDashboardCommand extends CommandBase {
     //Drivetrain display local vars
     String[] splitStringArrayDVT = Drivetrain.drivetrainDashboard.split(";");
     SmartDashboard.putNumber("DVT String Length", splitStringArrayDVT.length);
+    SmartDashboard.putNumber("Player 1 Left Y", RobotContainer.Xbox1.getLeftY());
+    SmartDashboard.putNumber("Player 1 Left X", RobotContainer.Xbox1.getLeftX());
     
     for(int i = 0; i <= splitStringArrayDVT.length-1; i++){
 
@@ -101,7 +104,7 @@ public class SmartDashboardCommand extends CommandBase {
 
     }
 
- /*
+ 
     String[] splitStringArrayTUR = TurretSubsystem.turretDashboard.split(";");
     SmartDashboard.putNumber("TUR String Length", splitStringArrayTUR.length);
     SmartDashboard.putString("TUR String", TurretSubsystem.turretDashboard);
@@ -112,7 +115,7 @@ public class SmartDashboardCommand extends CommandBase {
       SmartDashboard.putString(splitSplitStringArrayTUR[0], splitSplitStringArrayTUR[1]);
 
     }
-*/
+
 
   }  
 

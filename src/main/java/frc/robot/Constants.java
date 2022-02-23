@@ -40,16 +40,18 @@ public final class Constants {
     public static final int rearLeftRotEncoderPort = 10;
     public static final int rearRightRotEncoderPort = 12;
 
-    public static final int feederMotorPort = 20;
+    public static final int feederMotorPort = 17;
 
     //Other Motors
     
     public static final int topShootMotorPort = 11;
     public static final int bottomShootMotorPort = 12;
-    public static final int hookMotorPort = 21;
-    public static final int turretMotorPort = 22;
+    public static final int hookMotorPort = 18;
+    public static final int turretMotorPort = 19;
 
     //Solenolds
+
+    public static final int pnumaticHubPort = 15;
  
     public static final int kickoutPnumatic_Deploy = 9;
     public static final int kickoutPnumatic_Retract = 14;

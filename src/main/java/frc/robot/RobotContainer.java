@@ -138,10 +138,6 @@ public class RobotContainer {
 
   public RobotContainer() {
  
-    Compress = new Compressor(PneumaticsModuleType.REVPH);
- 
-    Compress.enableDigital();
-
     //Subsystems
     drivetrain = new Drivetrain();
     limelight = new LimeLightSubsystem();
